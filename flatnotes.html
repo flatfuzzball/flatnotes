@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>flat's Notes App</title>
+	<style>
+		body {
+			font-family: Arial, sans-serif;
+		}
+
+		.container {
+			max-width: 600px;
+			margin: 0 auto;
+			padding: 20px;
+		}
+
+		.notes-list {
+			list-style: none;
+			padding: 0;
+			margin: 0;
+		}
+
+		.note {
+			border: 1px solid #ccc;
+			padding: 10px;
+			margin-bottom: 10px;
+		}
+
+		.note button {
+			background-color: #f44336;
+			color: #fff;
+			border: none;
+			padding: 5px 10px;
+			cursor: pointer;
+			float: right;
+		}
+
+		.note textarea {
+			width: 100%;
+			resize: none;
+			border: none;
+		}
+
+		.new-note {
+			margin-bottom: 10px;
+		}
+
+		.new-note input[type="text"] {
+			width: 100%;
+			padding: 10px;
+			font-size: 16px;
+			border: none;
+			border-bottom: 1px solid #ccc;
+			margin-right: 10px;
+		}
+
+		.new-note button[type="submit"] {
+			background-color: #4CAF50;
+			color: #fff;
+			border: none;
+			padding: 10px;
+			cursor: pointer;
+		}
+	</style>
+</head>
+<body>
+	<div class="container">
+		<h1>flat's Notes App</h1>
+		<form class="new-note-form">
+			<div class="new-note">
+				<input type="text" id="new-note-title" placeholder="Enter note title...">
+				<button type="submit">Add Note</button>
+			</div>
+		</form>
+		<ul class="notes-list"></ul>
+	</div>
+
+	<script>
+		const notesList = document.querySelector('.notes-list');
+		const newNoteForm = document.querySelector('.new-note-form');
+		const newNoteTitleInput = document.querySelector('#new-note-title');
+
+		// Function to create a new note element
+		function createNoteElement(title, content) {
+			const note = document.createElement('li');
+			note.classList.add('note');
+
+			const noteTitle = document.createElement('h2');
+			noteTitle.textContent = title;
+			note.appendChild(noteTitle);
+
+			const noteContent = document.createElement('textarea');
+			noteContent.textContent = content;
+			note.appendChild(noteContent);
+
+			const deleteButton = document.createElement('button');
+			deleteButton.textContent = 'Delete Note';
+			deleteButton.addEventListener('click', function() {
+				note.remove();
+			});
+			note.appendChild(deleteButton);
+
+			return note;
+		}
+
+		// Function to add a new note to the list
+		function addNewNoteToList(title, content) {
+			const newNote = createNoteElement(title, content);
+			notesList.appendChild(newNote);
+		}
+
+		// Event listener to handle form submission
+		newNoteForm.addEventListener('submit', function(event) {
+			event.preventDefault();
+			const title = newNoteTitleInput.value;
+			addNewNoteToList(title, '');
+			newNoteTitleInput.value = '';
+		});
+	</script>
+</body>
+</html>
